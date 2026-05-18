@@ -93,8 +93,8 @@ Each concept the PDF requires (§I) and where this project applies it:
 | Data mapping / JSON exchange     | ✅ `to_dict()` serializers on every model + structured JSON envelopes (`{"data": ...}` / `{"error": ...}`) + CSV exports (`*/routes.py:export_csv`) |
 | Middleware / backend services    | Flask blueprints — [app/__init__.py](app/__init__.py#L20-L35)          |
 | Frontend ↔ backend integration   | Jinja templates + Bearer-token `/api/v1/*` JSON API + browser `fetch()` |
-| OOP — class / inheritance        | `class User(UserMixin, db.Model)` in [app/models.py](app/models.py)    |
-| Design pattern                   | **MVC** (models/views/routes split via blueprints) + **Application Factory** (`create_app`) + **Repository-like access** via SQLAlchemy queries |
+| OOP — class / inheritance        | ✅ `class User(UserMixin, db.Model)` in [app/models.py](app/models.py) — full write-up in [docs/oop-and-patterns.md](docs/oop-and-patterns.md) |
+| Design pattern                   | ✅ Application Factory, Blueprint, Decorator, State, ORM — all documented with file:line references in [docs/oop-and-patterns.md](docs/oop-and-patterns.md) |
 | Basic security & validation      | Werkzeug password hashing, Flask-Login sessions, Flask-WTF CSRF + validators, `@staff_required` / `@admin_required` — [app/decorators.py](app/decorators.py) |
 | Testing & documentation          | ✅ Postman collection                                                 |
 
@@ -156,8 +156,8 @@ Each concept the PDF requires (§I) and where this project applies it:
 | M2 | **REST API layer (JSON)**       | [app/api/v1/](app/api/v1/) blueprint — 30 method/route pairs across 6 resources, Bearer + session auth, paginated lists, JSON error envelopes — see [docs/api-smoke-test.md](docs/api-smoke-test.md) for a quick walkthrough | ✅ done |
 | —  | UI/UX redesign                  | Custom CSS design system on top of Bootstrap — Inter font, indigo accent, soft status tints, status timelines, auth-shell — see [app/static/css/style.css](app/static/css/style.css) | ✅ done |
 | M3 | API testing artifacts           | Postman collection (25 requests, 7 folders) + idempotent seed script + IT106 testing-results table + **26 screenshots** (one per request) — [docs/api-tests/](docs/api-tests/) | ✅ done |
-| M4 | OOP + design-pattern write-up   | `docs/oop-and-patterns.md` pointing to exact files/lines for each concept   | ⏭ next |
-| M5 | IT106 final documentation       | `docs/final-documentation.md` covering all 12 sections in PDF §VI           | ⬜ todo |
+| M4 | OOP + design-pattern write-up   | [docs/oop-and-patterns.md](docs/oop-and-patterns.md) — 5 OOP concepts + 5 design patterns, each linked to exact file:line | ✅ done |
+| M5 | IT106 final documentation       | `docs/final-documentation.md` covering all 12 sections in PDF §VI           | ⏭ next |
 | M6 | System screenshots              | `docs/screenshots/` — login, dashboard, add form, data table, edit, delete, search, API tests | ⬜ todo |
 | M7 | Presentation deck (10–15 min)   | `docs/presentation.pptx` (or PDF) — 11 required sections in PDF §VII        | ⬜ todo |
 | M8 | User manual + submission ZIP    | `docs/user-manual.pdf`, SQL dump, individual-contribution form, GitHub link, `IT106_FinalProject_<Group>_LostAndFound.zip` per PDF §VIII | ⬜ todo |
@@ -170,7 +170,7 @@ Each concept the PDF requires (§I) and where this project applies it:
 | Backend & API Integration                 |     15 | ✅ M2 shipped — `/api/v1/*` live; M3 Postman screenshots prove it |
 | Database Design & Integration             |     15 | Already built · M5 documents it     |
 | Frontend Design & Usability               |     10 | ✅ Custom design system shipped on top of Bootstrap; M6 screenshots prove it |
-| OOP & Design Patterns                     |     10 | Already built · **M4** documents it |
+| OOP & Design Patterns                     |     10 | ✅ M4 shipped — [docs/oop-and-patterns.md](docs/oop-and-patterns.md) maps every rubric concept to exact file:line |
 | Validation & Basic Security               |     10 | Already built · M5 documents it     |
 | Testing & Debugging                       |      5 | ✅ M3 shipped — Postman collection + testing-results table; M5 references it |
 | Documentation                             |      5 | **M5**                              |
