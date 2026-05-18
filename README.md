@@ -160,8 +160,8 @@ The original ScopeProject milestones (1–6) shipped the application itself. Thi
 | -- | ------------------------------- | --------------------------------------------------------------------------- | ------ |
 | M1 | Gap analysis + scope alignment  | This README + course-mapping tables                                         | ✅ done |
 | M2 | **REST API layer (JSON)**       | [app/api/v1/](app/api/v1/) blueprint — 30 method/route pairs across 6 resources, Bearer + session auth, paginated lists, JSON error envelopes — see [spec](docs/superpowers/specs/2026-05-19-rest-api-design.md) + [plan](docs/superpowers/plans/2026-05-19-rest-api-implementation.md) + [smoke test](docs/api-smoke-test.md) | ✅ done |
-| M3 | API testing artifacts           | Postman / Thunder Client collection + screenshots in `docs/api-tests/`      | ⏭ next |
-| M4 | OOP + design-pattern write-up   | `docs/oop-and-patterns.md` pointing to exact files/lines for each concept   | ⬜ todo |
+| M3 | API testing artifacts           | Thunder Client collection (26 requests) + idempotent seed script + IT106 testing-results table — see [docs/api-tests/](docs/api-tests/) | ✅ done |
+| M4 | OOP + design-pattern write-up   | `docs/oop-and-patterns.md` pointing to exact files/lines for each concept   | ⏭ next |
 | M5 | IT106 final documentation       | `docs/final-documentation.md` covering all 12 sections in PDF §VI           | ⬜ todo |
 | M6 | System screenshots              | `docs/screenshots/` — login, dashboard, add form, data table, edit, delete, search, API tests | ⬜ todo |
 | M7 | Presentation deck (10–15 min)   | `docs/presentation.pptx` (or PDF) — 11 required sections in PDF §VII        | ⬜ todo |
@@ -177,7 +177,7 @@ The original ScopeProject milestones (1–6) shipped the application itself. Thi
 | Frontend Design & Usability               |     10 | ✅ Custom "Quiet Polish" design system shipped on top of Bootstrap; M6 screenshots prove it |
 | OOP & Design Patterns                     |     10 | Already built · **M4** documents it |
 | Validation & Basic Security               |     10 | Already built · M5 documents it     |
-| Testing & Debugging                       |      5 | **M3** + M5 testing-results table   |
+| Testing & Debugging                       |      5 | ✅ M3 shipped — Thunder Client collection + testing-results table; M5 references it |
 | Documentation                             |      5 | **M5**                              |
 | Presentation & Demonstration              |      5 | **M7**                              |
 
