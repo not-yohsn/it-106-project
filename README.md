@@ -83,7 +83,7 @@ The system aims to:
 
 ---
 
-## 1. IT106 Course Mapping
+## 5. IT106 Course Mapping
 
 Each concept the PDF requires (§I) and where this project applies it:
 
@@ -102,7 +102,7 @@ Each concept the PDF requires (§I) and where this project applies it:
 
 ---
 
-## 2. Minimum Feature Compliance (PDF §V)
+## 6. Minimum Feature Compliance (PDF §V)
 
 | PDF Requirement                                                | Status         | Location                                                |
 | -------------------------------------------------------------- | -------------- | ------------------------------------------------------- |
@@ -117,7 +117,7 @@ Each concept the PDF requires (§I) and where this project applies it:
 
 ---
 
-## 3. Features (current)
+## 7. Features (current)
 
 - **Lost reports** with photo, category, location, and date
 - **Found items** logged by staff or finders, with photo upload (auto-resized via Pillow)
@@ -131,7 +131,7 @@ Each concept the PDF requires (§I) and where this project applies it:
 
 ---
 
-## 4. Tech Stack (matches PDF §IV — Option C: Hybrid)
+## 8. Tech Stack (matches PDF §IV — Option C: Hybrid)
 
 | Layer        | Choice                                            |
 | ------------ | ------------------------------------------------- |
@@ -150,7 +150,7 @@ Each concept the PDF requires (§I) and where this project applies it:
 
 ---
 
-## 5. Submission Roadmap to May 25, 2026
+## 9. Submission Roadmap to May 25, 2026
 
 The original ScopeProject milestones (1–6) shipped the application itself. This roadmap covers the gap between **what exists** and **what the IT106 PDF (§VI–§VIII) asks you to submit**.
 
@@ -181,7 +181,7 @@ The original ScopeProject milestones (1–6) shipped the application itself. Thi
 
 ---
 
-## 6. Quick Start (local)
+## 10. Quick Start (local)
 
 ### Prerequisites
 - Python 3.11+
@@ -214,7 +214,7 @@ App at **http://127.0.0.1:8000**.
 
 ---
 
-## 7. Deploy to Render + TiDB Cloud
+## 11. Deploy to Render + TiDB Cloud
 
 1. **TiDB Cloud Serverless** — create a free cluster, run the table-creation statements (without `CREATE DATABASE`/`USE`) in the `test` database
 2. **GitHub** — push this repo (GitHub Desktop or `git push`)
@@ -237,7 +237,7 @@ App at **http://127.0.0.1:8000**.
 
 ---
 
-## 8. User Roles
+## 12. User Roles
 
 | Role        | Capabilities                                                                       |
 | ----------- | ---------------------------------------------------------------------------------- |
@@ -253,7 +253,7 @@ UPDATE users SET role = 'admin' WHERE email = 'someone@example.com';
 
 ---
 
-## 9. Project Structure
+## 13. Project Structure
 
 ```
 .
@@ -299,7 +299,7 @@ UPDATE users SET role = 'admin' WHERE email = 'someone@example.com';
 
 ---
 
-## 10. Data Model
+## 14. Data Model
 
 Seven tables (PDF §V.4 requires only 3+), derived from the ERD in [others/prototype.html](others/prototype.html):
 
@@ -309,7 +309,7 @@ See [ScopeProject.md §6](ScopeProject.md) for the full relationship breakdown.
 
 ---
 
-## 11. Documentation
+## 15. Documentation
 
 - **Application scope & build history:** [ScopeProject.md](ScopeProject.md)
 - **IT106 final documentation (12-section format):** `docs/final-documentation.md` — *produced in Milestone M5*
