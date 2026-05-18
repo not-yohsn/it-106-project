@@ -96,7 +96,7 @@ Each concept the PDF requires (§I) and where this project applies it:
 | OOP — class / inheritance        | `class User(UserMixin, db.Model)` in [app/models.py](app/models.py)    |
 | Design pattern                   | **MVC** (models/views/routes split via blueprints) + **Application Factory** (`create_app`) + **Repository-like access** via SQLAlchemy queries |
 | Basic security & validation      | Werkzeug password hashing, Flask-Login sessions, Flask-WTF CSRF + validators, `@staff_required` / `@admin_required` — [app/decorators.py](app/decorators.py) |
-| Testing & documentation          | ✅ Thunder Client collection                                          |
+| Testing & documentation          | ✅ Postman collection                                                 |
 
 ---
 
@@ -126,7 +126,7 @@ Each concept the PDF requires (§I) and where this project applies it:
 - **CSV exports** for lost reports, found items, and claims (staff only)
 - **Admin user management** — promote / demote without touching SQL
 - **Privacy** — only the reporter and staff see full details on a lost report; other students see item name, photo, category, post date
-- **REST API at `/api/v1/*`** — Bearer-token auth (with browser-session fallback), `to_dict()` serializers on every model, paginated lists, structured JSON error envelopes, blueprint-scoped JSON 404/405/500 handlers — see [docs/api-smoke-test.md](docs/api-smoke-test.md) and [docs/api-tests/](docs/api-tests/) for the Thunder Client collection
+- **REST API at `/api/v1/*`** — Bearer-token auth (with browser-session fallback), `to_dict()` serializers on every model, paginated lists, structured JSON error envelopes, blueprint-scoped JSON 404/405/500 handlers — see [docs/api-smoke-test.md](docs/api-smoke-test.md) and [docs/api-tests/](docs/api-tests/) for the Postman collection
 - **Custom design system** — Bootstrap 5 reskinned with a token-based theme layer ([app/static/css/style.css](app/static/css/style.css)): indigo accent (`#4f46e5`), Inter font, soft status tints, 8px corner radius; new helper components `.page-header`, `.segmented-control`, `.empty-state`, `.status-timeline`, `.auth-shell`
 
 ---
@@ -155,7 +155,7 @@ Each concept the PDF requires (§I) and where this project applies it:
 | M1 | Gap analysis + scope alignment  | This README + course-mapping tables                                         | ✅ done |
 | M2 | **REST API layer (JSON)**       | [app/api/v1/](app/api/v1/) blueprint — 30 method/route pairs across 6 resources, Bearer + session auth, paginated lists, JSON error envelopes — see [docs/api-smoke-test.md](docs/api-smoke-test.md) for a quick walkthrough | ✅ done |
 | —  | UI/UX redesign                  | Custom CSS design system on top of Bootstrap — Inter font, indigo accent, soft status tints, status timelines, auth-shell — see [app/static/css/style.css](app/static/css/style.css) | ✅ done |
-| M3 | API testing artifacts           | Thunder Client collection (26 requests, 7 folders) + idempotent seed script + IT106 testing-results table — [docs/api-tests/](docs/api-tests/) | ✅ done |
+| M3 | API testing artifacts           | Postman collection (25 requests, 7 folders) + idempotent seed script + IT106 testing-results table — [docs/api-tests/](docs/api-tests/) | ✅ done |
 | M4 | OOP + design-pattern write-up   | `docs/oop-and-patterns.md` pointing to exact files/lines for each concept   | ⏭ next |
 | M5 | IT106 final documentation       | `docs/final-documentation.md` covering all 12 sections in PDF §VI           | ⬜ todo |
 | M6 | System screenshots              | `docs/screenshots/` — login, dashboard, add form, data table, edit, delete, search, API tests | ⬜ todo |
@@ -167,12 +167,12 @@ Each concept the PDF requires (§I) and where this project applies it:
 | Rubric Criterion                          | Points | Covered by                          |
 | ----------------------------------------- | -----: | ----------------------------------- |
 | System Functionality                      |     25 | Already built · M6 screenshots prove it |
-| Backend & API Integration                 |     15 | ✅ M2 shipped — `/api/v1/*` live; M3 Thunder Client screenshots prove it |
+| Backend & API Integration                 |     15 | ✅ M2 shipped — `/api/v1/*` live; M3 Postman screenshots prove it |
 | Database Design & Integration             |     15 | Already built · M5 documents it     |
 | Frontend Design & Usability               |     10 | ✅ Custom design system shipped on top of Bootstrap; M6 screenshots prove it |
 | OOP & Design Patterns                     |     10 | Already built · **M4** documents it |
 | Validation & Basic Security               |     10 | Already built · M5 documents it     |
-| Testing & Debugging                       |      5 | ✅ M3 shipped — Thunder Client collection + testing-results table; M5 references it |
+| Testing & Debugging                       |      5 | ✅ M3 shipped — Postman collection + testing-results table; M5 references it |
 | Documentation                             |      5 | **M5**                              |
 | Presentation & Demonstration              |      5 | **M7**                              |
 
@@ -278,7 +278,7 @@ UPDATE users SET role = 'admin' WHERE email = 'someone@example.com';
 ├── database/
 │   └── schema.sql           # MySQL schema for the 7 tables
 ├── docs/                    # M3–M8: IT106 submission artifacts
-│   ├── api-tests/           # Postman/Thunder Client screenshots (M3)
+│   ├── api-tests/           # Postman collection + screenshots (M3)
 │   ├── screenshots/         # system screenshots (M6)
 │   ├── oop-and-patterns.md  # OOP + design pattern write-up (M4)
 │   ├── final-documentation.md  # IT106 §VI format (M5)

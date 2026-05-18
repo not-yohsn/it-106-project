@@ -1,0 +1,725 @@
+{
+  "info": {
+    "_postman_id": "lostfound-m3-collection",
+    "name": "Lost & Found API (M3)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "IT106 M3 — REST API testing artifacts. 25 requests in 7 folders. Folder 0 must run first (captures tokens into the environment)."
+  },
+  "item": [
+    {
+      "name": "0 - Auth",
+      "item": [
+        {
+          "name": "01 Login admin",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@lostfound.local\",\n  \"password\": \"Admin123!\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "login"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                "var json = pm.response.json();",
+                "pm.environment.set(\"token_admin\", json.token);",
+                "pm.test(\"token captured\", () => pm.expect(json.token).to.be.a(\"string\"));"
+              ]
+            }
+          }]
+        },
+        {
+          "name": "02 Login student",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student@lostfound.local\",\n  \"password\": \"Student123!\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "login"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                "var json = pm.response.json();",
+                "pm.environment.set(\"token_student\", json.token);",
+                "pm.test(\"token captured\", () => pm.expect(json.token).to.be.a(\"string\"));"
+              ]
+            }
+          }]
+        },
+        {
+          "name": "02b Login student2 (silent, populates env)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student2@lostfound.local\",\n  \"password\": \"Student123!\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "login"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                "var json = pm.response.json();",
+                "pm.environment.set(\"token_student2\", json.token);"
+              ]
+            }
+          }]
+        },
+        {
+          "name": "03 Login wrong password (401)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@lostfound.local\",\n  \"password\": \"WrongPassword\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "login"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 401\", () => pm.response.to.have.status(401));",
+                "var json = pm.response.json();",
+                "pm.test(\"error is invalid_credentials\", () => pm.expect(json.error).to.eql(\"invalid_credentials\"));"
+              ]
+            }
+          }]
+        },
+        {
+          "name": "04 Logout student (204)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token_student}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/logout",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "logout"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 204\", () => pm.response.to.have.status(204));"
+              ]
+            }
+          }]
+        }
+      ]
+    },
+    {
+      "name": "1 - Users",
+      "item": [
+        {
+          "name": "05 GET /users (admin, paginated)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token_admin}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/v1/users",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "users"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                "var json = pm.response.json();",
+                "pm.test(\"data is array\", () => pm.expect(json.data).to.be.an(\"array\"));",
+                "pm.test(\"pagination envelope present\", () => { pm.expect(json).to.have.property(\"page\"); pm.expect(json).to.have.property(\"per_page\"); pm.expect(json).to.have.property(\"total\"); });"
+              ]
+            }
+          }]
+        },
+        {
+          "name": "06 GET /me (current user)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token_admin}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/v1/me",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "me"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                "var json = pm.response.json();",
+                "pm.test(\"email matches admin\", () => pm.expect(json.data.email).to.eql(\"admin@lostfound.local\"));"
+              ]
+            }
+          }]
+        },
+        {
+          "name": "07 PUT /users/2 promote to staff",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token_admin}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"staff\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/users/2",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "users", "2"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                "var json = pm.response.json();",
+                "pm.test(\"role is staff\", () => pm.expect(json.data.role).to.eql(\"staff\"));"
+              ]
+            }
+          }]
+        },
+        {
+          "name": "08 GET /users no auth (401)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v1/users",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "users"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 401\", () => pm.response.to.have.status(401));",
+                "var json = pm.response.json();",
+                "pm.test(\"error is authentication_required\", () => pm.expect(json.error).to.eql(\"authentication_required\"));"
+              ]
+            }
+          }]
+        }
+      ]
+    },
+    {
+      "name": "2 - Lost reports",
+      "item": [
+        {
+          "name": "09 GET /lost-reports (list)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token_student}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/v1/lost-reports",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "lost-reports"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                "var json = pm.response.json();",
+                "pm.test(\"data is array\", () => pm.expect(json.data).to.be.an(\"array\"));"
+              ]
+            }
+          }]
+        },
+        {
+          "name": "10 GET /lost-reports/1 (owner, full payload)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token_student}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/v1/lost-reports/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "lost-reports", "1"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                "var json = pm.response.json();",
+                "pm.test(\"description is visible to owner\", () => pm.expect(json.data.description).to.be.a(\"string\"));"
+              ]
+            }
+          }]
+        },
+        {
+          "name": "11 GET /lost-reports/1 as non-owner student (privacy filter)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token_student2}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/v1/lost-reports/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "lost-reports", "1"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                "var json = pm.response.json();",
+                "pm.test(\"item_name is visible\", () => pm.expect(json.data.item_name).to.be.a(\"string\"));",
+                "pm.test(\"description hidden for non-owner\", () => pm.expect(json.data.description).to.be.oneOf([undefined, null, \"\"]));"
+              ]
+            }
+          }]
+        },
+        {
+          "name": "12 POST /lost-reports (create)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token_student}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"item_name\": \"Test Wallet\",\n  \"category\": \"bag\",\n  \"location\": \"Cafeteria\",\n  \"date_lost\": \"2026-05-18\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/lost-reports",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "lost-reports"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 201\", () => pm.response.to.have.status(201));",
+                "var json = pm.response.json();",
+                "pm.environment.set(\"new_report_id\", json.data.report_id);",
+                "pm.test(\"report_id captured\", () => pm.expect(json.data.report_id).to.be.a(\"number\"));"
+              ]
+            }
+          }]
+        },
+        {
+          "name": "13 PUT /lost-reports/{{new_report_id}} (update description)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token_student}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Has my ID card inside\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/lost-reports/{{new_report_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "lost-reports", "{{new_report_id}}"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                "var json = pm.response.json();",
+                "pm.test(\"description updated\", () => pm.expect(json.data.description).to.eql(\"Has my ID card inside\"));"
+              ]
+            }
+          }]
+        },
+        {
+          "name": "14 DELETE /lost-reports/{{new_report_id}} (204)",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token_student}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/v1/lost-reports/{{new_report_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "lost-reports", "{{new_report_id}}"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 204\", () => pm.response.to.have.status(204));"
+              ]
+            }
+          }]
+        }
+      ]
+    },
+    {
+      "name": "3 - Found items",
+      "item": [
+        {
+          "name": "15 GET /found-items (list)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token_admin}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/v1/found-items",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "found-items"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                "var json = pm.response.json();",
+                "pm.test(\"data is array\", () => pm.expect(json.data).to.be.an(\"array\"));"
+              ]
+            }
+          }]
+        },
+        {
+          "name": "16 POST /found-items (student logs)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token_student}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"item_name\": \"Test umbrella\",\n  \"category\": \"misc\",\n  \"location_found\": \"Entrance\",\n  \"date_found\": \"2026-05-18\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/found-items",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "found-items"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 201\", () => pm.response.to.have.status(201));"
+              ]
+            }
+          }]
+        },
+        {
+          "name": "17 PUT /found-items/1 (staff update status)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token_admin}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"matched\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/found-items/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "found-items", "1"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 200\", () => pm.response.to.have.status(200));"
+              ]
+            }
+          }]
+        },
+        {
+          "name": "18 DELETE /found-items/3 as student (403)",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token_student}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/v1/found-items/3",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "found-items", "3"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 403\", () => pm.response.to.have.status(403));",
+                "var json = pm.response.json();",
+                "pm.test(\"error is forbidden\", () => pm.expect(json.error).to.eql(\"forbidden\"));"
+              ]
+            }
+          }]
+        }
+      ]
+    },
+    {
+      "name": "4 - Matches",
+      "item": [
+        {
+          "name": "19 GET /matches (list)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token_admin}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/v1/matches",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "matches"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 200\", () => pm.response.to.have.status(200));"
+              ]
+            }
+          }]
+        },
+        {
+          "name": "20 POST /matches (staff creates Silver-Pen match)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token_admin}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lost_report_id\": 2,\n  \"found_item_id\": 2,\n  \"confidence_score\": 0.9\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/matches",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "matches"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 201\", () => pm.response.to.have.status(201));"
+              ]
+            }
+          }]
+        }
+      ]
+    },
+    {
+      "name": "5 - Claims",
+      "item": [
+        {
+          "name": "21 GET /claims (student sees own)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token_student}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/v1/claims",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "claims"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 200\", () => pm.response.to.have.status(200));"
+              ]
+            }
+          }]
+        },
+        {
+          "name": "22 PUT /claims/1 (admin approves)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token_admin}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"approved\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/claims/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "claims", "1"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                "var json = pm.response.json();",
+                "pm.test(\"status is approved\", () => pm.expect(json.data.status).to.eql(\"approved\"));"
+              ]
+            }
+          }]
+        },
+        {
+          "name": "23 PUT /claims/1 invalid transition (400)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token_admin}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"pending\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/claims/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "claims", "1"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 400\", () => pm.response.to.have.status(400));",
+                "var json = pm.response.json();",
+                "pm.test(\"error is invalid_transition\", () => pm.expect(json.error).to.eql(\"invalid_transition\"));"
+              ]
+            }
+          }]
+        }
+      ]
+    },
+    {
+      "name": "6 - Notifications + 404",
+      "item": [
+        {
+          "name": "24 PUT /notifications/1 mark as read",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token_student}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"is_read\": true\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/notifications/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "notifications", "1"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                "var json = pm.response.json();",
+                "pm.test(\"is_read is true\", () => pm.expect(json.data.is_read).to.eql(true));"
+              ]
+            }
+          }]
+        },
+        {
+          "name": "25 GET unknown /api/v1/no-such-route (JSON 404)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token_admin}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/v1/no-such-route",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "no-such-route"]
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": {
+              "type": "text/javascript",
+              "exec": [
+                "pm.test(\"Status 404\", () => pm.response.to.have.status(404));",
+                "var json = pm.response.json();",
+                "pm.test(\"error is not_found\", () => pm.expect(json.error).to.eql(\"not_found\"));"
+              ]
+            }
+          }]
+        }
+      ]
+    }
+  ]
+}
