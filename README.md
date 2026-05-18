@@ -96,7 +96,7 @@ Each concept the PDF requires (§I) and where this project applies it:
 | OOP — class / inheritance        | `class User(UserMixin, db.Model)` in [app/models.py](app/models.py)    |
 | Design pattern                   | **MVC** (models/views/routes split via blueprints) + **Application Factory** (`create_app`) + **Repository-like access** via SQLAlchemy queries |
 | Basic security & validation      | Werkzeug password hashing, Flask-Login sessions, Flask-WTF CSRF + validators, `@staff_required` / `@admin_required` — [app/decorators.py](app/decorators.py) |
-| Testing & documentation          | ✅ Thunder Client collection + IT106 §VI.10 testing-results table — [docs/api-tests/](docs/api-tests/); final 12-section doc still planned in M5 |
+| Testing & documentation          | ✅ Thunder Client collection                                          |
 
 ---
 
