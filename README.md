@@ -60,6 +60,29 @@ The system aims to:
 
 ---
 
+## 4. System Architecture
+
+```
+ ┌────────────┐    HTTP/HTTPS    ┌──────────────────────────────┐    SQL    ┌────────────┐
+ │  Browser   │ ───────────────▶ │  Flask 3 (Gunicorn on Render)│ ────────▶ │  MySQL 8   │
+ │ (Bootstrap │                  │                              │           │  (TiDB     │
+ │  5 + JS)   │ ◀─────────────── │  • Blueprints (MVC routes)   │ ◀──────── │   Cloud)   │
+ └────────────┘  HTML / JSON     │  • SQLAlchemy ORM            │           └────────────┘
+                                 │  • Flask-Login + WTForms     │
+                                 │  • /api/v1/*  (M2 — JSON)    │
+                                 │  • Jinja2 templates          │
+                                 └──────────────────────────────┘
+```
+
+**Request flow:**
+
+1. The browser sends a request — either an HTML form post (server-rendered pages) or a `fetch()` call to `/api/v1/*` (JSON API, M2).
+2. Flask's app factory (`create_app`) routes the request to the matching blueprint controller (`auth`, `reports`, `found`, `matches`, `claims`, `notifications`, `admin`, `api`).
+3. The controller validates input through WTForms or JSON schema, calls the SQLAlchemy model layer, and runs supporting services (`matching.py`, `notify.py`, `utils.py`).
+4. The response is either a Jinja-rendered HTML page or a JSON payload.
+
+---
+
 ## 1. IT106 Course Mapping
 
 Each concept the PDF requires (§I) and where this project applies it:
