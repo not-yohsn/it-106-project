@@ -26,4 +26,4 @@ def _internal_error(error):
 
 # Resource module imports — each module attaches its routes to api_v1_bp on import.
 # auth_helpers is NOT imported here; it is imported by the individual resource modules.
-from . import auth  # noqa: E402,F401
+from . import auth, users  # noqa: E402,F401
