@@ -1,0 +1,320 @@
+{
+  "clientName": "Thunder Client",
+  "collectionName": "Lost & Found API (M3)",
+  "_id": "col-lostfound-m3",
+  "version": "1.2",
+  "dateExported": "2026-05-19T00:00:00.000Z",
+  "folders": [
+    { "_id": "folder-0-auth",     "name": "0 - Auth",                "containerId": "", "created": "2026-05-19", "sortNum": 10000 },
+    { "_id": "folder-1-users",    "name": "1 - Users",               "containerId": "", "created": "2026-05-19", "sortNum": 20000 },
+    { "_id": "folder-2-lost",     "name": "2 - Lost reports",        "containerId": "", "created": "2026-05-19", "sortNum": 30000 },
+    { "_id": "folder-3-found",    "name": "3 - Found items",         "containerId": "", "created": "2026-05-19", "sortNum": 40000 },
+    { "_id": "folder-4-matches",  "name": "4 - Matches",             "containerId": "", "created": "2026-05-19", "sortNum": 50000 },
+    { "_id": "folder-5-claims",   "name": "5 - Claims",              "containerId": "", "created": "2026-05-19", "sortNum": 60000 },
+    { "_id": "folder-6-notifs",   "name": "6 - Notifications + 404", "containerId": "", "created": "2026-05-19", "sortNum": 70000 }
+  ],
+  "requests": [
+    {
+      "_id": "req-01", "colId": "col-lostfound-m3", "containerId": "folder-0-auth",
+      "name": "01 Login admin",
+      "url": "{{base_url}}/api/v1/auth/login", "method": "POST",
+      "sortNum": 10000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": { "type": "json", "raw": "{\n  \"email\": \"admin@lostfound.local\",\n  \"password\": \"Admin123!\"\n}", "form": [] },
+      "tests": [
+        { "type": "res-code", "value": "200", "action": "equal" },
+        { "type": "set-env-var", "custom": "token_admin", "action": "setto", "value": "json-query", "options": { "language": "json", "value": "json.token" } }
+      ]
+    },
+    {
+      "_id": "req-02", "colId": "col-lostfound-m3", "containerId": "folder-0-auth",
+      "name": "02 Login student",
+      "url": "{{base_url}}/api/v1/auth/login", "method": "POST",
+      "sortNum": 20000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": { "type": "json", "raw": "{\n  \"email\": \"student@lostfound.local\",\n  \"password\": \"Student123!\"\n}", "form": [] },
+      "tests": [
+        { "type": "res-code", "value": "200", "action": "equal" },
+        { "type": "set-env-var", "custom": "token_student", "action": "setto", "value": "json-query", "options": { "language": "json", "value": "json.token" } }
+      ]
+    },
+    {
+      "_id": "req-02b", "colId": "col-lostfound-m3", "containerId": "folder-0-auth",
+      "name": "02b Login student2 (silent, populates env)",
+      "url": "{{base_url}}/api/v1/auth/login", "method": "POST",
+      "sortNum": 25000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": { "type": "json", "raw": "{\n  \"email\": \"student2@lostfound.local\",\n  \"password\": \"Student123!\"\n}", "form": [] },
+      "tests": [
+        { "type": "res-code", "value": "200", "action": "equal" },
+        { "type": "set-env-var", "custom": "token_student2", "action": "setto", "value": "json-query", "options": { "language": "json", "value": "json.token" } }
+      ]
+    },
+    {
+      "_id": "req-03", "colId": "col-lostfound-m3", "containerId": "folder-0-auth",
+      "name": "03 Login wrong password (401)",
+      "url": "{{base_url}}/api/v1/auth/login", "method": "POST",
+      "sortNum": 30000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": { "type": "json", "raw": "{\n  \"email\": \"admin@lostfound.local\",\n  \"password\": \"WrongPassword\"\n}", "form": [] },
+      "tests": [
+        { "type": "res-code", "value": "401", "action": "equal" },
+        { "type": "json-query", "custom": "json.error", "value": "invalid_credentials", "action": "equal" }
+      ]
+    },
+    {
+      "_id": "req-04", "colId": "col-lostfound-m3", "containerId": "folder-0-auth",
+      "name": "04 Logout student (204)",
+      "url": "{{base_url}}/api/v1/auth/logout", "method": "POST",
+      "sortNum": 40000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{token_student}}" }],
+      "body": { "type": "json", "raw": "", "form": [] },
+      "tests": [{ "type": "res-code", "value": "204", "action": "equal" }]
+    },
+    {
+      "_id": "req-05", "colId": "col-lostfound-m3", "containerId": "folder-1-users",
+      "name": "05 GET /users (admin, paginated)",
+      "url": "{{base_url}}/api/v1/users", "method": "GET",
+      "sortNum": 10000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{token_admin}}" }],
+      "tests": [
+        { "type": "res-code", "value": "200", "action": "equal" },
+        { "type": "json-query", "custom": "json.data", "action": "isarray" }
+      ]
+    },
+    {
+      "_id": "req-06", "colId": "col-lostfound-m3", "containerId": "folder-1-users",
+      "name": "06 GET /me (current user)",
+      "url": "{{base_url}}/api/v1/me", "method": "GET",
+      "sortNum": 20000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{token_admin}}" }],
+      "tests": [
+        { "type": "res-code", "value": "200", "action": "equal" },
+        { "type": "json-query", "custom": "json.data.email", "value": "admin@lostfound.local", "action": "equal" }
+      ]
+    },
+    {
+      "_id": "req-07", "colId": "col-lostfound-m3", "containerId": "folder-1-users",
+      "name": "07 PUT /users/2 promote to staff",
+      "url": "{{base_url}}/api/v1/users/2", "method": "PUT",
+      "sortNum": 30000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{token_admin}}" },
+        { "name": "Content-Type",  "value": "application/json" }
+      ],
+      "body": { "type": "json", "raw": "{\n  \"role\": \"staff\"\n}", "form": [] },
+      "tests": [
+        { "type": "res-code", "value": "200", "action": "equal" },
+        { "type": "json-query", "custom": "json.data.role", "value": "staff", "action": "equal" }
+      ]
+    },
+    {
+      "_id": "req-08", "colId": "col-lostfound-m3", "containerId": "folder-1-users",
+      "name": "08 GET /users no auth (401)",
+      "url": "{{base_url}}/api/v1/users", "method": "GET",
+      "sortNum": 40000, "created": "2026-05-19", "modified": "2026-05-19",
+      "tests": [
+        { "type": "res-code", "value": "401", "action": "equal" },
+        { "type": "json-query", "custom": "json.error", "value": "authentication_required", "action": "equal" }
+      ]
+    },
+    {
+      "_id": "req-09", "colId": "col-lostfound-m3", "containerId": "folder-2-lost",
+      "name": "09 GET /lost-reports (list)",
+      "url": "{{base_url}}/api/v1/lost-reports", "method": "GET",
+      "sortNum": 10000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{token_student}}" }],
+      "tests": [
+        { "type": "res-code", "value": "200", "action": "equal" },
+        { "type": "json-query", "custom": "json.data", "action": "isarray" }
+      ]
+    },
+    {
+      "_id": "req-10", "colId": "col-lostfound-m3", "containerId": "folder-2-lost",
+      "name": "10 GET /lost-reports/1 (owner, full payload)",
+      "url": "{{base_url}}/api/v1/lost-reports/1", "method": "GET",
+      "sortNum": 20000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{token_student}}" }],
+      "tests": [
+        { "type": "res-code", "value": "200", "action": "equal" },
+        { "type": "json-query", "custom": "json.data.description", "action": "isstring" }
+      ]
+    },
+    {
+      "_id": "req-11", "colId": "col-lostfound-m3", "containerId": "folder-2-lost",
+      "name": "11 GET /lost-reports/1 as non-owner student (privacy filter)",
+      "url": "{{base_url}}/api/v1/lost-reports/1", "method": "GET",
+      "sortNum": 30000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{token_student2}}" }],
+      "tests": [
+        { "type": "res-code", "value": "200", "action": "equal" },
+        { "type": "json-query", "custom": "json.data.item_name", "action": "isstring" }
+      ]
+    },
+    {
+      "_id": "req-12", "colId": "col-lostfound-m3", "containerId": "folder-2-lost",
+      "name": "12 POST /lost-reports (create)",
+      "url": "{{base_url}}/api/v1/lost-reports", "method": "POST",
+      "sortNum": 40000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{token_student}}" },
+        { "name": "Content-Type",  "value": "application/json" }
+      ],
+      "body": { "type": "json", "raw": "{\n  \"item_name\": \"Test Wallet\",\n  \"category\": \"bag\",\n  \"location\": \"Cafeteria\",\n  \"date_lost\": \"2026-05-18\"\n}", "form": [] },
+      "tests": [
+        { "type": "res-code", "value": "201", "action": "equal" },
+        { "type": "set-env-var", "custom": "new_report_id", "action": "setto", "value": "json-query", "options": { "language": "json", "value": "json.data.report_id" } }
+      ]
+    },
+    {
+      "_id": "req-13", "colId": "col-lostfound-m3", "containerId": "folder-2-lost",
+      "name": "13 PUT /lost-reports/{{new_report_id}} (update description)",
+      "url": "{{base_url}}/api/v1/lost-reports/{{new_report_id}}", "method": "PUT",
+      "sortNum": 50000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{token_student}}" },
+        { "name": "Content-Type",  "value": "application/json" }
+      ],
+      "body": { "type": "json", "raw": "{\n  \"description\": \"Has my ID card inside\"\n}", "form": [] },
+      "tests": [
+        { "type": "res-code", "value": "200", "action": "equal" },
+        { "type": "json-query", "custom": "json.data.description", "value": "Has my ID card inside", "action": "equal" }
+      ]
+    },
+    {
+      "_id": "req-14", "colId": "col-lostfound-m3", "containerId": "folder-2-lost",
+      "name": "14 DELETE /lost-reports/{{new_report_id}} (204)",
+      "url": "{{base_url}}/api/v1/lost-reports/{{new_report_id}}", "method": "DELETE",
+      "sortNum": 60000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{token_student}}" }],
+      "tests": [{ "type": "res-code", "value": "204", "action": "equal" }]
+    },
+    {
+      "_id": "req-15", "colId": "col-lostfound-m3", "containerId": "folder-3-found",
+      "name": "15 GET /found-items (list)",
+      "url": "{{base_url}}/api/v1/found-items", "method": "GET",
+      "sortNum": 10000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{token_admin}}" }],
+      "tests": [{ "type": "res-code", "value": "200", "action": "equal" }]
+    },
+    {
+      "_id": "req-16", "colId": "col-lostfound-m3", "containerId": "folder-3-found",
+      "name": "16 POST /found-items (student logs)",
+      "url": "{{base_url}}/api/v1/found-items", "method": "POST",
+      "sortNum": 20000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{token_student}}" },
+        { "name": "Content-Type",  "value": "application/json" }
+      ],
+      "body": { "type": "json", "raw": "{\n  \"item_name\": \"Test umbrella\",\n  \"category\": \"misc\",\n  \"location_found\": \"Entrance\",\n  \"date_found\": \"2026-05-18\"\n}", "form": [] },
+      "tests": [{ "type": "res-code", "value": "201", "action": "equal" }]
+    },
+    {
+      "_id": "req-17", "colId": "col-lostfound-m3", "containerId": "folder-3-found",
+      "name": "17 PUT /found-items/1 (staff update status)",
+      "url": "{{base_url}}/api/v1/found-items/1", "method": "PUT",
+      "sortNum": 30000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{token_admin}}" },
+        { "name": "Content-Type",  "value": "application/json" }
+      ],
+      "body": { "type": "json", "raw": "{\n  \"status\": \"matched\"\n}", "form": [] },
+      "tests": [{ "type": "res-code", "value": "200", "action": "equal" }]
+    },
+    {
+      "_id": "req-18", "colId": "col-lostfound-m3", "containerId": "folder-3-found",
+      "name": "18 DELETE /found-items/3 as student (403)",
+      "url": "{{base_url}}/api/v1/found-items/3", "method": "DELETE",
+      "sortNum": 40000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{token_student}}" }],
+      "tests": [
+        { "type": "res-code", "value": "403", "action": "equal" },
+        { "type": "json-query", "custom": "json.error", "value": "forbidden", "action": "equal" }
+      ]
+    },
+    {
+      "_id": "req-19", "colId": "col-lostfound-m3", "containerId": "folder-4-matches",
+      "name": "19 GET /matches (list)",
+      "url": "{{base_url}}/api/v1/matches", "method": "GET",
+      "sortNum": 10000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{token_admin}}" }],
+      "tests": [{ "type": "res-code", "value": "200", "action": "equal" }]
+    },
+    {
+      "_id": "req-20", "colId": "col-lostfound-m3", "containerId": "folder-4-matches",
+      "name": "20 POST /matches (staff creates Silver-Pen match)",
+      "url": "{{base_url}}/api/v1/matches", "method": "POST",
+      "sortNum": 20000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{token_admin}}" },
+        { "name": "Content-Type",  "value": "application/json" }
+      ],
+      "body": { "type": "json", "raw": "{\n  \"lost_report_id\": 2,\n  \"found_item_id\": 2,\n  \"confidence_score\": 0.9\n}", "form": [] },
+      "tests": [{ "type": "res-code", "value": "201", "action": "equal" }]
+    },
+    {
+      "_id": "req-21", "colId": "col-lostfound-m3", "containerId": "folder-5-claims",
+      "name": "21 GET /claims (student sees own)",
+      "url": "{{base_url}}/api/v1/claims", "method": "GET",
+      "sortNum": 10000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{token_student}}" }],
+      "tests": [{ "type": "res-code", "value": "200", "action": "equal" }]
+    },
+    {
+      "_id": "req-22", "colId": "col-lostfound-m3", "containerId": "folder-5-claims",
+      "name": "22 PUT /claims/1 (admin approves)",
+      "url": "{{base_url}}/api/v1/claims/1", "method": "PUT",
+      "sortNum": 20000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{token_admin}}" },
+        { "name": "Content-Type",  "value": "application/json" }
+      ],
+      "body": { "type": "json", "raw": "{\n  \"status\": \"approved\"\n}", "form": [] },
+      "tests": [
+        { "type": "res-code", "value": "200", "action": "equal" },
+        { "type": "json-query", "custom": "json.data.status", "value": "approved", "action": "equal" }
+      ]
+    },
+    {
+      "_id": "req-23", "colId": "col-lostfound-m3", "containerId": "folder-5-claims",
+      "name": "23 PUT /claims/1 invalid transition (400)",
+      "url": "{{base_url}}/api/v1/claims/1", "method": "PUT",
+      "sortNum": 30000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{token_admin}}" },
+        { "name": "Content-Type",  "value": "application/json" }
+      ],
+      "body": { "type": "json", "raw": "{\n  \"status\": \"pending\"\n}", "form": [] },
+      "tests": [
+        { "type": "res-code", "value": "400", "action": "equal" },
+        { "type": "json-query", "custom": "json.error", "value": "invalid_transition", "action": "equal" }
+      ]
+    },
+    {
+      "_id": "req-24", "colId": "col-lostfound-m3", "containerId": "folder-6-notifs",
+      "name": "24 PUT /notifications/1 mark as read",
+      "url": "{{base_url}}/api/v1/notifications/1", "method": "PUT",
+      "sortNum": 10000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{token_student}}" },
+        { "name": "Content-Type",  "value": "application/json" }
+      ],
+      "body": { "type": "json", "raw": "{\n  \"is_read\": true\n}", "form": [] },
+      "tests": [
+        { "type": "res-code", "value": "200", "action": "equal" },
+        { "type": "json-query", "custom": "json.data.is_read", "value": "true", "action": "equal" }
+      ]
+    },
+    {
+      "_id": "req-25", "colId": "col-lostfound-m3", "containerId": "folder-6-notifs",
+      "name": "25 GET unknown /api/v1/no-such-route (JSON 404)",
+      "url": "{{base_url}}/api/v1/no-such-route", "method": "GET",
+      "sortNum": 20000, "created": "2026-05-19", "modified": "2026-05-19",
+      "headers": [{ "name": "Authorization", "value": "Bearer {{token_admin}}" }],
+      "tests": [
+        { "type": "res-code", "value": "404", "action": "equal" },
+        { "type": "json-query", "custom": "json.error", "value": "not_found", "action": "equal" }
+      ]
+    }
+  ]
+}
