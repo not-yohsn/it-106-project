@@ -88,15 +88,15 @@ Each concept the PDF requires (§I) and where this project applies it:
 | IT106 Required Concept           | Where it lives in this codebase                                        |
 | -------------------------------- | ---------------------------------------------------------------------- |
 | Web application development      | Flask 3 + Jinja2 + Bootstrap 5 — [app/__init__.py](app/__init__.py)    |
-| RESTful API integration          | `/api/v1/*` JSON endpoints — **planned, see Milestone M2 below**       |
+| RESTful API integration          | ✅ `/api/v1/*` JSON endpoints — [app/api/v1/](app/api/v1/) (30 method/route pairs across 6 resources) |
 | Database connectivity            | SQLAlchemy + PyMySQL → MySQL 8 — [app/config.py](app/config.py)        |
-| Data mapping / JSON exchange     | API serializers (M2) + CSV exports (`*/routes.py:export_csv`)          |
+| Data mapping / JSON exchange     | ✅ `to_dict()` serializers on every model + structured JSON envelopes + CSV exports (`*/routes.py:export_csv`) |
 | Middleware / backend services    | Flask blueprints — [app/__init__.py](app/__init__.py#L20-L35)          |
-| Frontend ↔ backend integration   | Jinja templates + browser `fetch()` against `/api/v1/*` (M2)           |
+| Frontend ↔ backend integration   | Jinja templates + Bearer-token `/api/v1/*` JSON API + browser `fetch()` |
 | OOP — class / inheritance        | `class User(UserMixin, db.Model)` in [app/models.py](app/models.py)    |
 | Design pattern                   | **MVC** (models/views/routes split via blueprints) + **Application Factory** (`create_app`) + **Repository-like access** via SQLAlchemy queries |
 | Basic security & validation      | Werkzeug password hashing, Flask-Login sessions, Flask-WTF CSRF + validators, `@staff_required` / `@admin_required` — [app/decorators.py](app/decorators.py) |
-| Testing & documentation          | Test-case table + screenshots in `docs/` — **planned, see M3/M5/M6**   |
+| Testing & documentation          | ✅ Thunder Client collection + IT106 §VI.10 testing-results table — [docs/api-tests/](docs/api-tests/); final 12-section doc still planned in M5 |
 
 ---
 
@@ -126,6 +126,8 @@ Each concept the PDF requires (§I) and where this project applies it:
 - **CSV exports** for lost reports, found items, and claims (staff only)
 - **Admin user management** — promote / demote without touching SQL
 - **Privacy** — only the reporter and staff see full details on a lost report; other students see item name, photo, category, post date
+- **REST API at `/api/v1/*`** — Bearer-token auth (with browser-session fallback), `to_dict()` serializers on every model, paginated lists, structured JSON error envelopes, blueprint-scoped JSON 404/405/500 handlers — see [docs/api-smoke-test.md](docs/api-smoke-test.md) and [docs/api-tests/](docs/api-tests/) for the Thunder Client collection
+- **"Quiet Polish" custom design system** — Bootstrap 5 reskinned with a token-based theme layer ([app/static/css/style.css](app/static/css/style.css)): indigo accent (`#4f46e5`), Inter font, soft status tints, 8px corner radius; new helper components `.page-header`, `.segmented-control`, `.empty-state`, `.status-timeline`, `.auth-shell`
 
 ---
 
@@ -151,9 +153,10 @@ Each concept the PDF requires (§I) and where this project applies it:
 | #  | Milestone                       | Deliverable                                                                 | Status |
 | -- | ------------------------------- | --------------------------------------------------------------------------- | ------ |
 | M1 | Gap analysis + scope alignment  | This README + course-mapping tables                                         | ✅ done |
-| M2 | **REST API layer (JSON)**       | `app/api/v1/` blueprint exposing `GET/POST/PUT/DELETE` for users, lost reports, found items, matches, claims, notifications | ⏭ next |
-| M3 | API testing artifacts           | Postman / Thunder Client collection + screenshots in `docs/api-tests/`      | ⬜ todo |
-| M4 | OOP + design-pattern write-up   | `docs/oop-and-patterns.md` pointing to exact files/lines for each concept   | ⬜ todo |
+| M2 | **REST API layer (JSON)**       | [app/api/v1/](app/api/v1/) blueprint — 30 method/route pairs across 6 resources, Bearer + session auth, paginated lists, JSON error envelopes — see [spec](docs/superpowers/specs/2026-05-19-rest-api-design.md) + [plan](docs/superpowers/plans/2026-05-19-rest-api-implementation.md) + [smoke test](docs/api-smoke-test.md) | ✅ done |
+| —  | UI/UX redesign                  | "Quiet Polish" design system — custom CSS theme layer on top of Bootstrap, Inter font, indigo accent, status timelines, auth-shell — see [spec](docs/superpowers/specs/2026-05-19-ui-redesign-design.md) | ✅ done |
+| M3 | API testing artifacts           | Thunder Client collection (26 requests, 7 folders) + idempotent seed script + IT106 testing-results table — [docs/api-tests/](docs/api-tests/) | ✅ done |
+| M4 | OOP + design-pattern write-up   | `docs/oop-and-patterns.md` pointing to exact files/lines for each concept   | ⏭ next |
 | M5 | IT106 final documentation       | `docs/final-documentation.md` covering all 12 sections in PDF §VI           | ⬜ todo |
 | M6 | System screenshots              | `docs/screenshots/` — login, dashboard, add form, data table, edit, delete, search, API tests | ⬜ todo |
 | M7 | Presentation deck (10–15 min)   | `docs/presentation.pptx` (or PDF) — 11 required sections in PDF §VII        | ⬜ todo |
@@ -164,7 +167,7 @@ Each concept the PDF requires (§I) and where this project applies it:
 | Rubric Criterion                          | Points | Covered by                          |
 | ----------------------------------------- | -----: | ----------------------------------- |
 | System Functionality                      |     25 | Already built · M6 screenshots prove it |
-| Backend & API Integration                 |     15 | **M2** (currently 0 — biggest gap)  |
+| Backend & API Integration                 |     15 | ✅ M2 shipped — `/api/v1/*` live; M3 Thunder Client screenshots prove it |
 | Database Design & Integration             |     15 | Already built · M5 documents it     |
 | Frontend Design & Usability               |     10 | ✅ Custom "Quiet Polish" design system shipped on top of Bootstrap; M6 screenshots prove it |
 | OOP & Design Patterns                     |     10 | Already built · **M4** documents it |
