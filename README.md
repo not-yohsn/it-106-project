@@ -113,7 +113,7 @@ Each concept the PDF requires (§I) and where this project applies it:
 | Authentication / user validation                               | ✅ done        | [app/auth/](app/auth/), Flask-WTF validators            |
 | Data exchange via JSON                                         | 🚧 planned (M2) | API responses + JSON import/export                     |
 | OOP (class, inheritance, etc.)                                 | ✅ done        | [app/models.py](app/models.py)                          |
-| At least one design pattern                                    | ✅ done        | MVC + Application Factory (see §1 above)                |
+| At least one design pattern                                    | ✅ done        | MVC + Application Factory (see §5 above)                |
 
 ---
 
