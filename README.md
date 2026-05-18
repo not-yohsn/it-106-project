@@ -157,8 +157,8 @@ Each concept the PDF requires (§I) and where this project applies it:
 | —  | UI/UX redesign                  | Custom CSS design system on top of Bootstrap — Inter font, indigo accent, soft status tints, status timelines, auth-shell — see [app/static/css/style.css](app/static/css/style.css) | ✅ done |
 | M3 | API testing artifacts           | Postman collection (25 requests, 7 folders) + idempotent seed script + IT106 testing-results table + **26 screenshots** (one per request) — [docs/api-tests/](docs/api-tests/) | ✅ done |
 | M4 | OOP + design-pattern write-up   | [docs/oop-and-patterns.md](docs/oop-and-patterns.md) — 5 OOP concepts + 5 design patterns, each linked to exact file:line | ✅ done |
-| M5 | IT106 final documentation       | `docs/final-documentation.md` covering all 12 sections in PDF §VI           | ⏭ next |
-| M6 | System screenshots              | `docs/screenshots/` — login, dashboard, add form, data table, edit, delete, search, API tests | ⬜ todo |
+| M5 | IT106 final documentation       | [docs/final-documentation.md](docs/final-documentation.md) — all 12 sections in PDF §VI, with file:line cross-refs | ✅ done |
+| M6 | System screenshots              | `docs/screenshots/` — login, dashboard, add form, data table, edit, delete, search, API tests | ⏭ next |
 | M7 | Presentation deck (10–15 min)   | `docs/presentation.pptx` (or PDF) — 11 required sections in PDF §VII        | ⬜ todo |
 | M8 | User manual + submission ZIP    | `docs/user-manual.pdf`, SQL dump, individual-contribution form, GitHub link, `IT106_FinalProject_<Group>_LostAndFound.zip` per PDF §VIII | ⬜ todo |
 
@@ -168,12 +168,12 @@ Each concept the PDF requires (§I) and where this project applies it:
 | ----------------------------------------- | -----: | ----------------------------------- |
 | System Functionality                      |     25 | Already built · M6 screenshots prove it |
 | Backend & API Integration                 |     15 | ✅ M2 shipped — `/api/v1/*` live; M3 Postman screenshots prove it |
-| Database Design & Integration             |     15 | Already built · M5 documents it     |
+| Database Design & Integration             |     15 | ✅ Already built · [docs/final-documentation.md §7](docs/final-documentation.md) documents the 7-table schema with PK/FK/sample data |
 | Frontend Design & Usability               |     10 | ✅ Custom design system shipped on top of Bootstrap; M6 screenshots prove it |
 | OOP & Design Patterns                     |     10 | ✅ M4 shipped — [docs/oop-and-patterns.md](docs/oop-and-patterns.md) maps every rubric concept to exact file:line |
-| Validation & Basic Security               |     10 | Already built · M5 documents it     |
+| Validation & Basic Security               |     10 | ✅ Already built · documented in [docs/final-documentation.md §4–§5](docs/final-documentation.md) (RBAC, scrypt password/token hashing, CSRF, ENUM constraints) |
 | Testing & Debugging                       |      5 | ✅ M3 shipped — Postman collection + testing-results table; M5 references it |
-| Documentation                             |      5 | **M5**                              |
+| Documentation                             |      5 | ✅ M5 shipped — [docs/final-documentation.md](docs/final-documentation.md) covers all 12 §VI sections |
 | Presentation & Demonstration              |      5 | **M7**                              |
 
 ---
