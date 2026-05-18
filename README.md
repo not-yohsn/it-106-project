@@ -15,6 +15,26 @@ The **Lost and Found Management System** replaces that workflow with a single we
 
 ---
 
+## 2. Objectives
+
+### General Objective
+
+To design and develop an integrated web-based application that demonstrates CRUD operations, database connectivity, API integration, and application of programming concepts.
+
+### Specific Objectives
+
+The system aims to:
+
+1. Develop a functional web-based application for reporting lost items and logging found items on campus.
+2. Implement complete CRUD operations for lost reports, found items, claims, and user accounts.
+3. Integrate a MySQL database with seven related tables, primary/foreign keys, and proper constraints for record management.
+4. Create REST API endpoints (`/api/v1/*`) exposing every core resource as JSON for `GET`, `POST`, `PUT`, and `DELETE`.
+5. Apply object-oriented programming concepts — class definitions, model inheritance (`UserMixin` + `db.Model`), and service-style modules for matching and notification logic.
+6. Apply the **MVC** design pattern (models / templates / route blueprints) and the **Application Factory** pattern (`create_app`).
+7. Test the system through functional test cases and document the results in the IT106 testing-results table.
+
+---
+
 ## 1. IT106 Course Mapping
 
 Each concept the PDF requires (§I) and where this project applies it:
