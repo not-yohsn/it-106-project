@@ -155,7 +155,7 @@ Each concept the PDF requires (§I) and where this project applies it:
 | M1 | Gap analysis + scope alignment  | This README + course-mapping tables                                         | ✅ done |
 | M2 | **REST API layer (JSON)**       | [app/api/v1/](app/api/v1/) blueprint — 30 method/route pairs across 6 resources, Bearer + session auth, paginated lists, JSON error envelopes — see [docs/api-smoke-test.md](docs/api-smoke-test.md) for a quick walkthrough | ✅ done |
 | —  | UI/UX redesign                  | Custom CSS design system on top of Bootstrap — Inter font, indigo accent, soft status tints, status timelines, auth-shell — see [app/static/css/style.css](app/static/css/style.css) | ✅ done |
-| M3 | API testing artifacts           | Postman collection (25 requests, 7 folders) + idempotent seed script + IT106 testing-results table — [docs/api-tests/](docs/api-tests/) | ✅ done |
+| M3 | API testing artifacts           | Postman collection (25 requests, 7 folders) + idempotent seed script + IT106 testing-results table + **26 screenshots** (one per request) — [docs/api-tests/](docs/api-tests/) | ✅ done |
 | M4 | OOP + design-pattern write-up   | `docs/oop-and-patterns.md` pointing to exact files/lines for each concept   | ⏭ next |
 | M5 | IT106 final documentation       | `docs/final-documentation.md` covering all 12 sections in PDF §VI           | ⬜ todo |
 | M6 | System screenshots              | `docs/screenshots/` — login, dashboard, add form, data table, edit, delete, search, API tests | ⬜ todo |
