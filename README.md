@@ -129,6 +129,7 @@ Each concept the PDF requires (§I) and where this project applies it:
 - **Admin user management** — promote / demote without touching SQL
 - **Privacy** — only the reporter and staff see full details on a lost report; other students see item name, photo, category, post date
 - **REST API at `/api/v1/*`** — Bearer-token (with browser-session fallback), `to_dict()` serializers on every model, paginated lists, structured JSON error envelopes, blueprint-scoped JSON 404/405/500 handlers — see [docs/api-smoke-test.md](docs/api-smoke-test.md)
+- **"Quiet Polish" custom design system** — Bootstrap 5 reskinned with a token-based theme layer ([app/static/css/style.css](app/static/css/style.css)): indigo accent (`#4f46e5`), Inter font, soft status tints, 8px corner radius, refined navbar/cards/forms/tables/badges/alerts/pagination, plus new helper components (`.page-header`, `.segmented-control`, `.empty-state`, `.status-timeline`, `.auth-shell`)
 
 ---
 
@@ -173,7 +174,7 @@ The original ScopeProject milestones (1–6) shipped the application itself. Thi
 | System Functionality                      |     25 | Already built · M6 screenshots prove it |
 | Backend & API Integration                 |     15 | ✅ M2 shipped — `/api/v1/*` live; M3 Postman screenshots prove it |
 | Database Design & Integration             |     15 | Already built · M5 documents it     |
-| Frontend Design & Usability               |     10 | Already built · M6 screenshots prove it |
+| Frontend Design & Usability               |     10 | ✅ Custom "Quiet Polish" design system shipped on top of Bootstrap; M6 screenshots prove it |
 | OOP & Design Patterns                     |     10 | Already built · **M4** documents it |
 | Validation & Basic Security               |     10 | Already built · M5 documents it     |
 | Testing & Debugging                       |      5 | **M3** + M5 testing-results table   |
