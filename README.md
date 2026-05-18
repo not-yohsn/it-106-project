@@ -306,12 +306,3 @@ Seven tables (PDF §V.4 requires only 3+), derived from the ERD in [others/proto
 `users` · `finders` · `lost_reports` · `found_items` · `matches` · `claims` · `notifications`
 
 See [ScopeProject.md §6](ScopeProject.md) for the full relationship breakdown.
-
----
-
-## 15. Documentation
-
-- **Application scope & build history:** [ScopeProject.md](ScopeProject.md)
-- **IT106 final documentation (12-section format):** `docs/final-documentation.md` — *produced in Milestone M5*
-- **Original brief:** [others/LOST-AND-FOUND.pdf](others/LOST-AND-FOUND.pdf)
-- **IT106 spec:** [IT106 Final Term Project Specifications.pdf](IT106%20Final%20Term%20Project%20Specifications.pdf)
