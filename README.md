@@ -109,7 +109,7 @@ Each concept the PDF requires (§I) and where this project applies it:
 | REST API endpoints (`GET/POST/PUT/DELETE` returning JSON)      | ✅ done        | [app/api/v1/](app/api/v1/) (~24 endpoints across 6 resources)         |
 | Database — 3+ related tables w/ PK & FK                        | ✅ done (7 tables) | [database/schema.sql](database/schema.sql)          |
 | Authentication / user validation                               | ✅ done        | [app/auth/](app/auth/), Flask-WTF validators, Bearer token in [app/api/v1/auth.py](app/api/v1/auth.py)     |
-| Data exchange via JSON                                         | ✅ done        | `/api/v1/*` responses + structured envelopes per [docs/superpowers/specs/2026-05-19-rest-api-design.md](docs/superpowers/specs/2026-05-19-rest-api-design.md) §8  |
+| Data exchange via JSON                                         | ✅ done        | `/api/v1/*` responses + structured envelopes            |
 | OOP (class, inheritance, etc.)                                 | ✅ done        | [app/models.py](app/models.py)                          |
 | At least one design pattern                                    | ✅ done        | MVC + Application Factory (see §5 above)                |
 
