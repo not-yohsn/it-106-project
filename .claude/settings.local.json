@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(superpowers:brainstorming)",
+      "Skill(superpowers:brainstorming:*)",
+      "Bash(mkdir -p \"c:/Users/John Joseph Perez/Downloads/Studies/it-106-project/docs/superpowers/specs\")",
+      "Bash(ls \"c:/Users/John Joseph Perez/.claude\" 2>&1 | head -30)",
+      "Read(//c/Users/John Joseph Perez/.claude/**)",
+      "Bash(ls \"c:/Users/John Joseph Perez/Downloads/Studies/it-106-project/.claude\" 2>&1; mkdir -p \"c:/Users/John Joseph Perez/Downloads/Studies/it-106-project/.claude/commands\")",
+      "Skill(superpowers:writing-plans)",
+      "Skill(superpowers:writing-plans:*)",
+      "Bash(python -c \"from app import create_app; app = create_app\\(\\); print\\('ok'\\)\")",
+      "Bash(./venv/Scripts/python.exe -c \"from app import create_app; app = create_app\\(\\); print\\('ok'\\)\")",
+      "PowerShell($urls = @\\('http://127.0.0.1:8000/','http://127.0.0.1:8000/auth/login','http://127.0.0.1:8000/auth/register','http://127.0.0.1:8000/static/css/style.css'\\); foreach \\($u in $urls\\) { try { $r = Invoke-WebRequest -UseBasicParsing -Uri $u -MaximumRedirection 0 -ErrorAction Stop; \"$u -> $\\($r.StatusCode\\)\" } catch { \"$u -> $\\($_.Exception.Response.StatusCode.value__\\)\" } })",
+      "Bash(grep -iE \"\\\\.\\(html|css\\)$\")",
+      "PowerShell($urls = @\\('http://127.0.0.1:8000/reports/','http://127.0.0.1:8000/found/','http://127.0.0.1:8000/claims/','http://127.0.0.1:8000/matches/','http://127.0.0.1:8000/notifications/','http://127.0.0.1:8000/admin/users','http://127.0.0.1:8000/dashboard','http://127.0.0.1:8000/reports/new','http://127.0.0.1:8000/found/new'\\); foreach \\($u in $urls\\) { try { $r = Invoke-WebRequest -UseBasicParsing -Uri $u -MaximumRedirection 0 -ErrorAction Stop; \"$u -> $\\($r.StatusCode\\)\" } catch { \"$u -> $\\($_.Exception.Response.StatusCode.value__\\)\" } })",
+      "PowerShell($urls = @\\('http://127.0.0.1:8000/reports/','http://127.0.0.1:8000/found/','http://127.0.0.1:8000/claims/','http://127.0.0.1:8000/matches/','http://127.0.0.1:8000/notifications/','http://127.0.0.1:8000/admin/users','http://127.0.0.1:8000/dashboard','http://127.0.0.1:8000/reports/new','http://127.0.0.1:8000/found/new'\\); foreach \\($u in $urls\\) { try { $r = Invoke-WebRequest -UseBasicParsing -Uri $u -MaximumRedirection 0 -ErrorAction Stop; Write-Host \"$u -> $\\($r.StatusCode\\)\" } catch [System.Net.WebException] { $code = [int]$_.Exception.Response.StatusCode; Write-Host \"$u -> $code\" } catch { Write-Host \"$u -> ERR $\\($_.Exception.Message\\)\" } })",
+      "Bash(./venv/Scripts/python.exe -c ' *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(./venv/Scripts/python.exe -c \"import ast; ast.parse\\(open\\('scripts/seed_demo_data.py'\\).read\\(\\)\\); print\\('ok'\\)\")",
+      "Bash(./venv/Scripts/python.exe scripts/seed_demo_data.py)",
+      "Bash(./venv/Scripts/python.exe -c \"import json; d = json.load\\(open\\('docs/api-tests/thunder-environment_LostFound.json'\\)\\); print\\(f'{len\\(d[\\\\\"data\\\\\"]\\)} env vars'\\); print\\('ok'\\)\")",
+      "Bash(./venv/Scripts/python.exe -c \"import json; d = json.load\\(open\\('docs/api-tests/thunder-collection_LostFound.json'\\)\\); print\\(f'{len\\(d[\\\\\"folders\\\\\"]\\)} folders, {len\\(d[\\\\\"requests\\\\\"]\\)} requests'\\)\")"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\John Joseph Perez\\Downloads\\Studies\\it-106-project\\docs\\superpowers",
+      "c:\\Users\\John Joseph Perez\\Downloads\\Studies\\it-106-project\\.claude"
+    ]
+  }
+}
