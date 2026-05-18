@@ -23,6 +23,7 @@ Thumbs.db
 # Local-only folders — not published to GitHub
 .claude/
 documentation/
+docs/superpowers/
 engineering/
 engineering-team/
 others/
