@@ -3,8 +3,6 @@
 
 A web-based system for reporting lost items, logging found items, automatically matching them, and notifying owners. Maps to **Suggested Project Title #11** in the [IT106 Final Term Project Specifications](IT106%20Final%20Term%20Project%20Specifications.pdf).
 
-> Replaces the ad-hoc workflow of Facebook posts and SLG Office logs with a single, centralized platform.
-
 ---
 
 ## 1. Background
@@ -102,16 +100,16 @@ Each concept the PDF requires (§I) and where this project applies it:
 
 ---
 
-## 6. Minimum Feature Compliance (PDF §V)
+## 6. Minimum Feature Compliance
 
 | PDF Requirement                                                | Status         | Location                                                |
 | -------------------------------------------------------------- | -------------- | ------------------------------------------------------- |
 | User Interface (homepage, nav, forms, tables, search, buttons) | ✅ done        | [app/templates/](app/templates/)                        |
 | CRUD operations                                                | ✅ done        | [app/reports/](app/reports/), [app/found/](app/found/), [app/claims/](app/claims/) |
-| REST API endpoints (`GET/POST/PUT/DELETE` returning JSON)      | 🚧 planned (M2) | `app/api/v1/` — to be added                           |
+| REST API endpoints (`GET/POST/PUT/DELETE` returning JSON)      | ✅ done        | [app/api/v1/](app/api/v1/) (~24 endpoints across 6 resources)         |
 | Database — 3+ related tables w/ PK & FK                        | ✅ done (7 tables) | [database/schema.sql](database/schema.sql)          |
-| Authentication / user validation                               | ✅ done        | [app/auth/](app/auth/), Flask-WTF validators            |
-| Data exchange via JSON                                         | 🚧 planned (M2) | API responses + JSON import/export                     |
+| Authentication / user validation                               | ✅ done        | [app/auth/](app/auth/), Flask-WTF validators, Bearer token in [app/api/v1/auth.py](app/api/v1/auth.py)     |
+| Data exchange via JSON                                         | ✅ done        | `/api/v1/*` responses + structured envelopes per [docs/superpowers/specs/2026-05-19-rest-api-design.md](docs/superpowers/specs/2026-05-19-rest-api-design.md) §8  |
 | OOP (class, inheritance, etc.)                                 | ✅ done        | [app/models.py](app/models.py)                          |
 | At least one design pattern                                    | ✅ done        | MVC + Application Factory (see §5 above)                |
 
@@ -128,10 +126,11 @@ Each concept the PDF requires (§I) and where this project applies it:
 - **CSV exports** for lost reports, found items, and claims (staff only)
 - **Admin user management** — promote / demote without touching SQL
 - **Privacy** — only the reporter and staff see full details on a lost report; other students see item name, photo, category, post date
+- **REST API at `/api/v1/*`** — Bearer-token (with browser-session fallback), `to_dict()` serializers on every model, paginated lists, structured JSON error envelopes, blueprint-scoped JSON 404/405/500 handlers — see [docs/api-smoke-test.md](docs/api-smoke-test.md)
 
 ---
 
-## 8. Tech Stack (matches PDF §IV — Option C: Hybrid)
+## 8. Tech Stack
 
 | Layer        | Choice                                            |
 | ------------ | ------------------------------------------------- |
@@ -146,31 +145,27 @@ Each concept the PDF requires (§I) and where this project applies it:
 | Email        | Flask-Mail (optional)                             |
 | Production   | Gunicorn on Render                                |
 
-> The PDF lists Option A (Node.js), Option B (PHP/Laravel), Option C (Hybrid — "Laravel, Node.js, Express.js, or **another approved backend framework**"). Flask qualifies under Option C.
-
 ---
 
 ## 9. Submission Roadmap to May 25, 2026
 
-The original ScopeProject milestones (1–6) shipped the application itself. This roadmap covers the gap between **what exists** and **what the IT106 PDF (§VI–§VIII) asks you to submit**.
-
 | #  | Milestone                       | Deliverable                                                                 | Status |
 | -- | ------------------------------- | --------------------------------------------------------------------------- | ------ |
 | M1 | Gap analysis + scope alignment  | This README + course-mapping tables                                         | ✅ done |
-| M2 | **REST API layer (JSON)**       | `app/api/v1/` blueprint exposing `GET/POST/PUT/DELETE` for users, lost reports, found items, matches, claims, notifications | ⏭ next |
-| M3 | API testing artifacts           | Postman / Thunder Client collection + screenshots in `docs/api-tests/`      | ⬜ todo |
+| M2 | **REST API layer (JSON)**       | [app/api/v1/](app/api/v1/) blueprint — 30 method/route pairs across 6 resources, Bearer + session auth, paginated lists, JSON error envelopes — see [spec](docs/superpowers/specs/2026-05-19-rest-api-design.md) + [plan](docs/superpowers/plans/2026-05-19-rest-api-implementation.md) + [smoke test](docs/api-smoke-test.md) | ✅ done |
+| M3 | API testing artifacts           | Postman / Thunder Client collection + screenshots in `docs/api-tests/`      | ⏭ next |
 | M4 | OOP + design-pattern write-up   | `docs/oop-and-patterns.md` pointing to exact files/lines for each concept   | ⬜ todo |
 | M5 | IT106 final documentation       | `docs/final-documentation.md` covering all 12 sections in PDF §VI           | ⬜ todo |
 | M6 | System screenshots              | `docs/screenshots/` — login, dashboard, add form, data table, edit, delete, search, API tests | ⬜ todo |
 | M7 | Presentation deck (10–15 min)   | `docs/presentation.pptx` (or PDF) — 11 required sections in PDF §VII        | ⬜ todo |
 | M8 | User manual + submission ZIP    | `docs/user-manual.pdf`, SQL dump, individual-contribution form, GitHub link, `IT106_FinalProject_<Group>_LostAndFound.zip` per PDF §VIII | ⬜ todo |
 
-### How rubric points map to milestones (PDF §IX, 100 pts total)
+### How rubric points map to milestones
 
 | Rubric Criterion                          | Points | Covered by                          |
 | ----------------------------------------- | -----: | ----------------------------------- |
 | System Functionality                      |     25 | Already built · M6 screenshots prove it |
-| Backend & API Integration                 |     15 | **M2** (currently 0 — biggest gap)  |
+| Backend & API Integration                 |     15 | M2 shipped — `/api/v1/*` live; M3 Postman screenshots prove it |
 | Database Design & Integration             |     15 | Already built · M5 documents it     |
 | Frontend Design & Usability               |     10 | Already built · M6 screenshots prove it |
 | OOP & Design Patterns                     |     10 | Already built · **M4** documents it |
@@ -275,12 +270,12 @@ UPDATE users SET role = 'admin' WHERE email = 'someone@example.com';
 │   ├── notifications/       # inbox + mark-read
 │   ├── admin/               # user management
 │   ├── main/                # landing page + dashboard
-│   ├── api/                 # 🚧 M2: /api/v1/* JSON endpoints
+│   ├── api/                 # M2: /api/v1/* JSON endpoints
 │   ├── templates/           # Jinja2 (Bootstrap 5)                        ← View layer (MVC)
 │   └── static/              # CSS + uploaded photos
 ├── database/
 │   └── schema.sql           # MySQL schema for the 7 tables
-├── docs/                    # 🚧 M3–M8: IT106 submission artifacts
+├── docs/                    # M3–M8: IT106 submission artifacts
 │   ├── api-tests/           # Postman/Thunder Client screenshots (M3)
 │   ├── screenshots/         # system screenshots (M6)
 │   ├── oop-and-patterns.md  # OOP + design pattern write-up (M4)
