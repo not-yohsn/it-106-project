@@ -126,7 +126,7 @@ Each concept the PDF requires (§I) and where this project applies it:
 - **CSV exports** for lost reports, found items, and claims (staff only)
 - **Admin user management** — promote / demote without touching SQL
 - **Privacy** — only the reporter and staff see full details on a lost report; other students see item name, photo, category, post date
-- **REST API at `/api/v1/*`** — Bearer-token auth (with browser-session fallback), `to_dict()` serializers on every model, paginated lists, structured JSON error envelopes, blueprint-scoped JSON 404/405/500 handlers — see [docs/api-smoke-test.md](docs/api-smoke-test.md) and [docs/api-tests/](docs/api-tests/) for the Thunder Client collection
+- **REST API at `/api/v1/*`** — Bearer-token auth (with browser-session fallback), `to_dict()` serializers on every model, paginated lists, structured JSON error envelopes, blueprint-scoped JSON 404/405/500 handlers.
 - **"Quiet Polish" custom design system** — Bootstrap 5 reskinned with a token-based theme layer ([app/static/css/style.css](app/static/css/style.css)): indigo accent (`#4f46e5`), Inter font, soft status tints, 8px corner radius; new helper components `.page-header`, `.segmented-control`, `.empty-state`, `.status-timeline`, `.auth-shell`
 
 ---
@@ -153,9 +153,9 @@ Each concept the PDF requires (§I) and where this project applies it:
 | #  | Milestone                       | Deliverable                                                                 | Status |
 | -- | ------------------------------- | --------------------------------------------------------------------------- | ------ |
 | M1 | Gap analysis + scope alignment  | This README + course-mapping tables                                         | ✅ done |
-| M2 | **REST API layer (JSON)**       | [app/api/v1/](app/api/v1/) blueprint — 30 method/route pairs across 6 resources, Bearer + session auth, paginated lists, JSON error envelopes — see [spec](docs/superpowers/specs/2026-05-19-rest-api-design.md) + [plan](docs/superpowers/plans/2026-05-19-rest-api-implementation.md) + [smoke test](docs/api-smoke-test.md) | ✅ done |
-| —  | UI/UX redesign                  | "Quiet Polish" design system — custom CSS theme layer on top of Bootstrap, Inter font, indigo accent, status timelines, auth-shell — see [spec](docs/superpowers/specs/2026-05-19-ui-redesign-design.md) | ✅ done |
-| M3 | API testing artifacts           | Thunder Client collection (26 requests, 7 folders) + idempotent seed script + IT106 testing-results table — [docs/api-tests/](docs/api-tests/) | ✅ done |
+| M2 | **REST API layer (JSON)**       | [app/api/v1/](app/api/v1/) blueprint — 30 method/route pairs across 6 resources, Bearer + session auth, paginated lists, JSON error envelopes | ✅ done |
+| —  | UI/UX redesign                  | "Quiet Polish" design system — custom CSS theme layer on top of Bootstrap, Inter font, indigo accent, status timelines, auth-shell | ✅ done |
+| M3 | API testing artifacts           | Thunder Client collection (26 requests, 7 folders) + idempotent seed script + IT106 testing-results table  | ✅ done |
 | M4 | OOP + design-pattern write-up   | `docs/oop-and-patterns.md` pointing to exact files/lines for each concept   | ⏭ next |
 | M5 | IT106 final documentation       | `docs/final-documentation.md` covering all 12 sections in PDF §VI           | ⬜ todo |
 | M6 | System screenshots              | `docs/screenshots/` — login, dashboard, add form, data table, edit, delete, search, API tests | ⬜ todo |
