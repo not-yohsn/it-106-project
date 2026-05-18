@@ -4,8 +4,8 @@ This folder is the IT106 evidence for **PDF §VIII.8** (Screenshots of API testi
 
 ## What's here
 
-- [`thunder-collection_LostFound.json`](thunder-collection_LostFound.json) — 26 requests in 7 folders
-- [`thunder-environment_LostFound.json`](thunder-environment_LostFound.json) — env variables (`base_url`, three token vars, `new_report_id`)
+- [`postman-collection_LostFound.json`](postman-collection_LostFound.json) — 25 requests in 7 folders (Postman v2.1.0 schema)
+- [`postman-environment_LostFound.json`](postman-environment_LostFound.json) — env variables (`base_url`, three token vars, `new_report_id`)
 - [`results-table.md`](results-table.md) — IT106 §VI.10 testing-results table (15 cases)
 - [`screenshots/`](screenshots/) — drop your PNG screenshots here as you run each request
 
@@ -45,27 +45,27 @@ Safe to re-run; idempotent.
 | `student@lostfound.local`     | `Student123!`| student | Owns the 3 seeded lost reports; submits the seeded claim |
 | `student2@lostfound.local`    | `Student123!`| student | Used in request 11 to demonstrate the lost-report privacy filter |
 
-## Step 2 — Install Thunder Client
+## Step 2 — Install the Postman extension
 
-In VS Code: Extensions panel → search **"Thunder Client"** (by Ranga Vadhineni) → Install.
+In VS Code: Extensions panel → search **"Postman"** (by Postman Inc.) → Install. Sign in with a free Postman account when prompted (the extension requires it to sync workspaces).
 
 ## Step 3 — Import the collection and environment
 
-1. Open the Thunder Client sidebar (lightning-bolt icon).
-2. Click **Collections** → ⋯ menu → **Import** → pick `docs/api-tests/thunder-collection_LostFound.json`.
-3. Click **Env** → ⋯ menu → **Import** → pick `docs/api-tests/thunder-environment_LostFound.json`.
-4. In the Env panel, click the new "Lost & Found (local)" environment to make it **active** (it'll show a check mark).
+1. Open the Postman sidebar (the orange Postman icon in the VS Code activity bar).
+2. **Collections** tab → **Import** button → pick `docs/api-tests/postman-collection_LostFound.json`.
+3. **Environments** tab → **Import** → pick `docs/api-tests/postman-environment_LostFound.json`.
+4. In the top-right environment dropdown of any request tab, select **"Lost & Found (local)"** so the `{{base_url}}` and token variables resolve.
 
 ## Step 4 — Run the requests in order
 
-Click each request top-to-bottom within each folder. **Folder 0 — Auth must run first** because requests 1, 2, and 2b populate `{{token_admin}}`, `{{token_student}}`, and `{{token_student2}}` automatically.
+Click each request top-to-bottom within each folder. **Folder 0 — Auth must run first** because requests 01, 02, and 02b populate `{{token_admin}}`, `{{token_student}}`, and `{{token_student2}}` automatically via their **Tests** scripts (`pm.environment.set(...)`).
 
-The "Tests" panel on the right of each response shows green ✅ or red ❌ for each assertion (status code, JSON body keys, env-var capture).
+After running each request, the **Test Results** tab (next to "Body" / "Headers" in the response panel) shows green checks ✅ or red Xs ❌ for each assertion.
 
 **Order:**
-1. Folder 0 — Auth (requests 1, 2, 2b, 3, 4)
-2. Folder 1 — Users (5, 6, 7, 8)
-3. Folder 2 — Lost reports (9, 10, 11, 12, 13, 14) — request 12 populates `{{new_report_id}}` for 13 & 14
+1. Folder 0 — Auth (01, 02, 02b, 03, 04)
+2. Folder 1 — Users (05, 06, 07, 08)
+3. Folder 2 — Lost reports (09, 10, 11, 12, 13, 14) — request 12 populates `{{new_report_id}}` for 13 & 14
 4. Folder 3 — Found items (15, 16, 17, 18)
 5. Folder 4 — Matches (19, 20)
 6. Folder 5 — Claims (21, 22, 23) — 22 must run before 23 for the invalid-transition test to make sense
@@ -74,8 +74,8 @@ The "Tests" panel on the right of each response shows green ✅ or red ❌ for e
 ## Step 5 — Screenshot each request
 
 For each request, after running it:
-1. Make sure both the Request panel (URL, headers, body) and the Response panel (status, body, Tests results) are visible.
-2. Take a screenshot of the entire Thunder Client window.
+1. Make sure both the **Request** panel (URL, headers, body) and the **Response** panel (status, body, Test Results) are visible.
+2. Take a screenshot of the entire Postman window.
 3. Save to `docs/api-tests/screenshots/` with this naming pattern: `NN-short-name.png`. Suggested filenames:
    - `01-auth-login-admin.png`
    - `02-auth-login-student.png`
@@ -110,7 +110,8 @@ Open [results-table.md](results-table.md) and confirm every row matches what you
 
 ## Troubleshooting
 
-- **All requests returning 401:** Folder 0 wasn't run first. Run requests 1, 2, and 2b to populate the token env vars.
-- **Request 11 returns the full payload (not filtered):** the privacy filter is in `app/api/v1/lost_reports.py:_serialize_lost_report_for`. Confirm `{{token_student2}}` is populated (rerun request 2b) and that the seed actually created `student2@lostfound.local`.
-- **Request 13/14 fail with "not_found":** `{{new_report_id}}` wasn't captured. Re-run request 12; the Tests panel should show the `set-env-var` rule firing.
-- **`set-env-var` rules aren't firing:** the Thunder Client format for those rules has changed between versions. Workaround: manually copy `token` from the response of requests 1/2/2b into the corresponding env var via the Env panel. Same for `new_report_id`.
+- **All requests returning 401:** Folder 0 wasn't run first. Run requests 01, 02, and 02b to populate the token env vars. Open the **Environment quick-look** (eye icon next to the env dropdown) to confirm the tokens are filled in.
+- **Tokens still empty after running login requests:** Open the **Test Results** tab on the login response and check that the `pm.environment.set(...)` assertion ran without error. If the env dropdown wasn't set to "Lost & Found (local)", the value silently went to globals instead — fix the env selector and re-run.
+- **Request 11 still returns the full payload (description visible):** the privacy filter is in `app/api/v1/lost_reports.py:_serialize_lost_report_for`. Confirm `{{token_student2}}` is populated (rerun request 02b) and that the seed actually created `student2@lostfound.local`.
+- **Request 13/14 fail with "not_found":** `{{new_report_id}}` wasn't captured. Re-run request 12; the Test Results tab should show `report_id captured` as green.
+- **Variables not substituting (`{{...}}` shows up literally in the request):** the environment isn't active. Use the top-right environment dropdown on any request tab to pick "Lost & Found (local)".

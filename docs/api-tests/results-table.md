@@ -1,6 +1,6 @@
 # IT106 §VI.10 — Testing Results
 
-API tests run via the Thunder Client collection at [thunder-collection_LostFound.json](thunder-collection_LostFound.json).
+API tests run via the Postman collection at [postman-collection_LostFound.json](postman-collection_LostFound.json).
 Run the collection top-to-bottom and screenshot each request; this table summarizes the 15 most representative cases.
 
 | # | Test Case | Expected Output | Actual Output | Status |
@@ -24,7 +24,7 @@ Run the collection top-to-bottom and screenshot each request; this table summari
 **Test environment:**
 - App: Flask 3 + SQLAlchemy + MySQL (MariaDB 10.4.32 via XAMPP)
 - DB: `lost_and_found2.0` seeded with `scripts/seed_demo_data.py`
-- Test tool: Thunder Client (VS Code extension), collection `thunder-collection_LostFound.json`
+- Test tool: Postman (VS Code extension), collection `postman-collection_LostFound.json`
 - Date: 2026-05-19
 
 > If any row's actual output differs from the expected, mark it ❌ Failed and add the actual response under the row.
