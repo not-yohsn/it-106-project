@@ -108,10 +108,10 @@ Each concept the PDF requires (§I) and where this project applies it:
 | -------------------------------------------------------------- | -------------- | ------------------------------------------------------- |
 | User Interface (homepage, nav, forms, tables, search, buttons) | ✅ done        | [app/templates/](app/templates/)                        |
 | CRUD operations                                                | ✅ done        | [app/reports/](app/reports/), [app/found/](app/found/), [app/claims/](app/claims/) |
-| REST API endpoints (`GET/POST/PUT/DELETE` returning JSON)      | 🚧 planned (M2) | `app/api/v1/` — to be added                           |
+| REST API endpoints (`GET/POST/PUT/DELETE` returning JSON)      | ✅ done        | [app/api/v1/](app/api/v1/) (~24 endpoints across 6 resources)         |
 | Database — 3+ related tables w/ PK & FK                        | ✅ done (7 tables) | [database/schema.sql](database/schema.sql)          |
-| Authentication / user validation                               | ✅ done        | [app/auth/](app/auth/), Flask-WTF validators            |
-| Data exchange via JSON                                         | 🚧 planned (M2) | API responses + JSON import/export                     |
+| Authentication / user validation                               | ✅ done        | [app/auth/](app/auth/), Flask-WTF validators, Bearer token in [app/api/v1/auth.py](app/api/v1/auth.py)     |
+| Data exchange via JSON                                         | ✅ done        | `/api/v1/*` responses + structured envelopes per [docs/superpowers/specs/2026-05-19-rest-api-design.md](docs/superpowers/specs/2026-05-19-rest-api-design.md) §8  |
 | OOP (class, inheritance, etc.)                                 | ✅ done        | [app/models.py](app/models.py)                          |
 | At least one design pattern                                    | ✅ done        | MVC + Application Factory (see §5 above)                |
 
@@ -128,6 +128,7 @@ Each concept the PDF requires (§I) and where this project applies it:
 - **CSV exports** for lost reports, found items, and claims (staff only)
 - **Admin user management** — promote / demote without touching SQL
 - **Privacy** — only the reporter and staff see full details on a lost report; other students see item name, photo, category, post date
+- **REST API at `/api/v1/*`** — Bearer-token (with browser-session fallback), `to_dict()` serializers on every model, paginated lists, structured JSON error envelopes, blueprint-scoped JSON 404/405/500 handlers — see [docs/api-smoke-test.md](docs/api-smoke-test.md)
 
 ---
 
@@ -157,8 +158,8 @@ The original ScopeProject milestones (1–6) shipped the application itself. Thi
 | #  | Milestone                       | Deliverable                                                                 | Status |
 | -- | ------------------------------- | --------------------------------------------------------------------------- | ------ |
 | M1 | Gap analysis + scope alignment  | This README + course-mapping tables                                         | ✅ done |
-| M2 | **REST API layer (JSON)**       | `app/api/v1/` blueprint exposing `GET/POST/PUT/DELETE` for users, lost reports, found items, matches, claims, notifications | ⏭ next |
-| M3 | API testing artifacts           | Postman / Thunder Client collection + screenshots in `docs/api-tests/`      | ⬜ todo |
+| M2 | **REST API layer (JSON)**       | [app/api/v1/](app/api/v1/) blueprint — 30 method/route pairs across 6 resources, Bearer + session auth, paginated lists, JSON error envelopes — see [spec](docs/superpowers/specs/2026-05-19-rest-api-design.md) + [plan](docs/superpowers/plans/2026-05-19-rest-api-implementation.md) + [smoke test](docs/api-smoke-test.md) | ✅ done |
+| M3 | API testing artifacts           | Postman / Thunder Client collection + screenshots in `docs/api-tests/`      | ⏭ next |
 | M4 | OOP + design-pattern write-up   | `docs/oop-and-patterns.md` pointing to exact files/lines for each concept   | ⬜ todo |
 | M5 | IT106 final documentation       | `docs/final-documentation.md` covering all 12 sections in PDF §VI           | ⬜ todo |
 | M6 | System screenshots              | `docs/screenshots/` — login, dashboard, add form, data table, edit, delete, search, API tests | ⬜ todo |
@@ -170,7 +171,7 @@ The original ScopeProject milestones (1–6) shipped the application itself. Thi
 | Rubric Criterion                          | Points | Covered by                          |
 | ----------------------------------------- | -----: | ----------------------------------- |
 | System Functionality                      |     25 | Already built · M6 screenshots prove it |
-| Backend & API Integration                 |     15 | **M2** (currently 0 — biggest gap)  |
+| Backend & API Integration                 |     15 | ✅ M2 shipped — `/api/v1/*` live; M3 Postman screenshots prove it |
 | Database Design & Integration             |     15 | Already built · M5 documents it     |
 | Frontend Design & Usability               |     10 | Already built · M6 screenshots prove it |
 | OOP & Design Patterns                     |     10 | Already built · **M4** documents it |
