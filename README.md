@@ -35,6 +35,31 @@ The system aims to:
 
 ---
 
+## 3. Scope and Limitations
+
+### In Scope
+
+- Registration and authentication for **student**, **staff**, and **admin** roles
+- Filing lost reports with photo, category, location, and date
+- Logging found items by staff or finders, with auto-resized photo upload
+- Automatic match scoring based on category, shared keywords, and location overlap
+- Claim workflow (`pending → approved → released`) with item-status transitions
+- In-app notifications (with optional email via Flask-Mail)
+- Per-role dashboards with KPI cards and personal stats
+- CSV exports of lost reports, found items, and claims (staff only)
+- Admin-side user management (promote/demote without touching SQL)
+- REST API for every core resource (Milestone M2)
+
+### Out of Scope (v1)
+
+- Native mobile apps (the web UI is responsive)
+- Payment, rewards, or any monetary transaction
+- AI / image-based matching — text and category matching only
+- Off-campus or public-facing deployment beyond the demo
+- Integration with external university systems (student records, ID system)
+
+---
+
 ## 1. IT106 Course Mapping
 
 Each concept the PDF requires (§I) and where this project applies it:
