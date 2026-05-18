@@ -12,11 +12,16 @@ Creates exactly:
 Run:  python scripts/seed_demo_data.py
 Safe to re-run; every insert checks for an existing row first.
 """
+import os
+import sys
 from datetime import date
 
-from app import create_app
-from app.extensions import db
-from app.models import (
+# Make the project root importable when running this script directly.
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from app import create_app  # noqa: E402
+from app.extensions import db  # noqa: E402
+from app.models import (  # noqa: E402
     Claim, FoundItem, LostReport, Match, Notification, User,
 )
 
