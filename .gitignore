@@ -19,11 +19,3 @@ app/static/uploads/*
 .DS_Store
 Thumbs.db
 .tmp/
-
-# Local-only folders — not published to GitHub
-.claude/
-documentation/
-docs/superpowers/
-engineering/
-engineering-team/
-others/
